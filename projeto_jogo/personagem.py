@@ -1,3 +1,4 @@
+import random
 from abc import ABC as _ABC
 
 
@@ -27,7 +28,7 @@ class Personagem(_ABC):
             print(f"{self.get_nome()} morreu!")
 
     def atacar(self, alvo):
-        dano = self.get_nivel() * 2
+        dano = random.randint(self.get_nivel() * 2, self.get_nivel() * 4)
         print(f"{self.get_nome()} atacou {alvo.get_nome()} e causou {dano} de dano!")
         alvo.receber_ataque(dano)
 
