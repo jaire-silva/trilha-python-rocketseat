@@ -20,8 +20,13 @@ class Jogo:
 
             if escolha == "1":
                 self.heroi.atacar(self.inimigo)
+            elif escolha == "2":
+                self.heroi.ataque_especial(self.inimigo)
             else:
                 print("Escolha inválida. Escolha novamente.")
+
+            if self.inimigo.get_vida() > 0:
+                self.inimigo.atacar(self.heroi)
 
         if self.heroi.get_vida() > 0:
             print("\nParabéns, você venceu a batalha!")
