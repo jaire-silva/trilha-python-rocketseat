@@ -19,9 +19,17 @@ class Personagem(_ABC):
     def get_nivel(self):
         return self.__nivel
 
-    # @_abstractmethod
-    # def atacar(self, alvo):
-    #     pass
+    def receber_atque(self, dano):
+        self.__vida -= dano
+
+        if self.__vida <= 0:
+            self.__vida = 0
+            print(f"{self.get_nome()} morreu!")
+
+    def atacar(self, alvo):
+        dano = self.get_nivel() * 2
+        print(f"{self.get_nome()} atacou {alvo.get_nome()} e causou {dano} de dano!")
+        alvo.receber_atque(dano)
 
     def exibir_detalhes(self):
         return f"Nome: {self.get_nome()} \nVida: {self.get_vida()} \nNível: {self.get_nivel()}"

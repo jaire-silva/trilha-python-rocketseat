@@ -1,11 +1,29 @@
-from personagem import Personagem as _Personagem
 from heroi import Heroi as _Heroi
 from inimigo import Inimigo as _Inimigo
 
-personagem = _Heroi("Herói", 200, 2, "Bola de Fogo")
-print(personagem.exibir_detalhes())
 
-print()
+class Jogo:
+    def __init__(self):
+        self.heroi = _Heroi("Herói", 200, 2, "Bola de Fogo")
+        self.inimigo = _Inimigo("Morcego", 50, 3, "Voador")
 
-inimigo = _Inimigo("Morcego", 50, 3, "Voador")
-print(inimigo.exibir_detalhes())
+    def iniciar_batalha(self):
+        while self.heroi.get_vida() > 0 and self.inimigo.get_vida() > 0:
+            print(f"\nDetalhes dos Personagens:")
+            print(self.heroi.exibir_detalhes())
+            print()
+            print(self.inimigo.exibir_detalhes())
+            print()
+
+            input("Pressione Enter para atacar...")
+            escolha = input("Escolha (1 - Ataque Normal, 2 - Ataque Especial): ")
+
+            if escolha == "1":
+                self.heroi.atacar(self.inimigo)
+            else:
+                print("Escolha inválida. Escolha novamente.")
+
+        if self.heroi.get_vida() > 0:
+            print("\nParabéns, você venceu a batalha!")
+        else:
+            print("\nVocê foi derrotado. Que pena!")
