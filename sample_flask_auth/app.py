@@ -26,6 +26,16 @@ with app.app_context():
     db.create_all()
     print("Tabelas criadas com sucesso!")
 
+    existing_user = User.query.filter_by(username="admin").first()
+    if existing_user:
+        print("Usuário 'admin' já existe!")
+    else:
+        user = User(username="admin", password="pass123")
+
+        db.session.add(user)
+        db.session.commit()
+        print("Usuário criado com sucesso!")
+
 
 @app.route("/")
 def hello_world():
