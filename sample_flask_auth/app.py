@@ -97,5 +97,39 @@ def create_user():
     return jsonify({"message": "Usuário cadastrado com sucesso!"}), 200
 
 
+@app.route("/user/<int:user_id>", methods=["GET"])
+@login_required
+def get_user(user_id: int):
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
+
+    return jsonify({
+        "user": {"username": user.username, "id": user.id}
+    })
+
+
+@app.route("/user/<int:user_id>", methods=["PUT"])
+@login_required
+def update_user(user_id: int):
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
+
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    db.session.query(User).filter(User.id == user_id).update({"username": username, "password": password})
+    db.session.commit()
+
+    return jsonify({
+        "message": "Usuário atualizado com sucesso!",
+        "user": {"username": user.username, "id": user.id}
+    })
+
+
 if __name__ == "__main__":
     app.run(debug=True)
