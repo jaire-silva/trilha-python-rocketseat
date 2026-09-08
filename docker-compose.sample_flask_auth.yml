@@ -1,0 +1,20 @@
+services:
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin123"
+      MYSQL_DATABASE: "sample_flask_auth"
+      MYSQL_ROOT_PASSWORD: "admin123"
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - sample_flask_auth_db:/var/lib/mysql
+
+
+volumes:
+  sample_flask_auth_db:
+    name: sample_flask_auth_db
