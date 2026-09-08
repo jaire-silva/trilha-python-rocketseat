@@ -149,6 +149,9 @@ def delete_user(user_id: int):
     if current_user.id == user_id:
         return jsonify({"message": "Deleção não permitida!"}), 403
 
+    if current_user.role != UserType.ADMIN:
+        return jsonify({"message": "Acesso negado!"}), 403
+
     db.session.delete(user)
     db.session.commit()
 
