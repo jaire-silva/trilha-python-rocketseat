@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 from sample_flask_auth.database import db
+from sample_flask_auth.enum.user_type import UserType
 from sample_flask_auth.model.user import User
 
 app = Flask(__name__)
@@ -14,7 +15,7 @@ instance_path = os.path.join(basedir, "instance")
 os.makedirs(instance_path, exist_ok=True)
 database_path = os.path.join(instance_path, "database.db")
 
-app.config["SECRET_KEY"] = "my_secret_key"
+app.config["SECRET_KEY"] = "admin123"
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://root:admin123@127.0.0.1:3306/sample_flask_auth"
 
 db.init_app(app)
@@ -30,7 +31,7 @@ with app.app_context():
     if existing_user:
         print("Usuário 'admin' já existe!")
     else:
-        user = User(username="admin", password="pass123")
+        user = User(username="admin", password="pass123", role=UserType.ADMIN)
 
         db.session.add(user)
         db.session.commit()
@@ -89,12 +90,15 @@ def create_user():
     if isUserExists:
         return jsonify({"message": "Nome de usuário já existente"}), 409
 
-    user = User(username=username, password=password)
+    user = User(username=username, password=password, role=UserType.USER)
 
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({"message": "Usuário cadastrado com sucesso!"}), 200
+    return jsonify({
+        "message": "Usuário cadastrado com sucesso!",
+        "user": {"username": user.username, "id": user.id, "role": user.role}
+    }), 200
 
 
 @app.route("/user/<int:user_id>", methods=["GET"])
@@ -106,7 +110,7 @@ def get_user(user_id: int):
         return jsonify({"message": "Usuário não encontrado."}), 404
 
     return jsonify({
-        "user": {"username": user.username, "id": user.id}
+        "user": {"username": user.username, "id": user.id, "role": user.role}
     })
 
 
@@ -118,6 +122,9 @@ def update_user(user_id: int):
     if not user:
         return jsonify({"message": "Usuário não encontrado."}), 404
 
+    if current_user.role != UserType.ADMIN:
+        return jsonify({"message": "Acesso negado!"}), 403
+
     data = request.json
     username = data.get("username")
     password = data.get("password")
@@ -127,7 +134,7 @@ def update_user(user_id: int):
 
     return jsonify({
         "message": "Usuário atualizado com sucesso!",
-        "user": {"username": user.username, "id": user.id}
+        "user": {"username": user.username, "id": user.id, "role": user.role}
     })
 
 
@@ -147,7 +154,7 @@ def delete_user(user_id: int):
 
     return jsonify({
         "message": "Usuário deletado com sucesso!",
-        "user": {"username": user.username, "id": user.id}
+        "user": {"username": user.username, "id": user.id, "role": user.role}
     })
 
 
