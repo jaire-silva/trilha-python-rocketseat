@@ -1,5 +1,6 @@
 import os
 
+import bcrypt
 from flask import Flask, request, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
@@ -31,7 +32,8 @@ with app.app_context():
     if existing_user:
         print("Usuário 'admin' já existe!")
     else:
-        user = User(username="admin", password="pass123", role=UserType.ADMIN)
+        hashed_password = bcrypt.hashpw(str.encode("pass123"), bcrypt.gensalt())
+        user = User(username="admin", password=hashed_password, role=UserType.ADMIN)
 
         db.session.add(user)
         db.session.commit()
@@ -59,7 +61,7 @@ def login():
 
     user: User = User.query.filter_by(username=username).first()
 
-    if not user or user.password != password:
+    if not user or not bcrypt.checkpw(str.encode(password), str.encode(user.password)):
         return jsonify({"message": "Credenciais inválidas"}), 400
 
     login_user(user)
@@ -90,7 +92,8 @@ def create_user():
     if isUserExists:
         return jsonify({"message": "Nome de usuário já existente"}), 409
 
-    user = User(username=username, password=password, role=UserType.USER)
+    hashed_password = bcrypt.hashpw(str.encode(password), bcrypt.gensalt())
+    user = User(username=username, password=hashed_password, role=UserType.USER)
 
     db.session.add(user)
     db.session.commit()
