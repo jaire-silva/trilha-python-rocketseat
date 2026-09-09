@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS sample_flask_auth;
+CREATE DATABASE IF NOT EXISTS web_socket_flask;

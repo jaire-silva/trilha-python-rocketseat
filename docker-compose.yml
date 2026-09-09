@@ -1,20 +1,21 @@
 services:
   db:
+    container_name: "mysql_database_flask"
     image: mysql:latest
     restart: unless-stopped
     environment:
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "admin123"
-      MYSQL_DATABASE: "sample_flask_auth"
       MYSQL_ROOT_PASSWORD: "admin123"
     ports:
       - "3306:3306"
     expose:
       - "3306"
     volumes:
-      - sample_flask_auth_db:/var/lib/mysql
+      - mysql_database_flask:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d
 
 
 volumes:
-  sample_flask_auth_db:
-    name: sample_flask_auth_db
+  mysql_database_flask:
+    name: mysql_database_flask
