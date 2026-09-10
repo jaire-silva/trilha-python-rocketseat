@@ -22,7 +22,10 @@ def pix():
     db.session.add(new_payment)
     db.session.commit()
 
-    return jsonify({'message': 'The payment has been created'})
+    return jsonify({
+        'message': 'The payment has been created',
+        "payment": new_payment.to_dict()
+    })
 
 
 @bp_payment.route('/pix/confirmation', methods=['POST'])
