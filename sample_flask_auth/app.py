@@ -17,7 +17,7 @@ os.makedirs(instance_path, exist_ok=True)
 database_path = os.path.join(instance_path, "database.db")
 
 app.config["SECRET_KEY"] = "admin123"
-app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://root:admin123@127.0.0.1:3306/sample_flask_auth"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://admin:admin123@localhost:5432/sample_flask_auth"
 
 db.init_app(app)
 

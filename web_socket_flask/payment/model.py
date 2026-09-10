@@ -1,4 +1,4 @@
-from web_soscket_flask.database import db
+from web_socket_flask.database import db
 
 
 class Payment(db.Model):
