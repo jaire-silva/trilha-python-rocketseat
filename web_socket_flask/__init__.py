@@ -1,1 +1,1 @@
-from web_socket_flask import payment
+from . import payment
