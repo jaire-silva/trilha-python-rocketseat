@@ -31,7 +31,7 @@
 
             <div id="purchase-value">
                 <img src="{{ url_for('static', filename='template_img/tag.svg') }}" alt="Ícone de tag"/>
-                <span>Compra de R$ <strong id="amount">287,90</strong></span>
+                <span>Compra de R$ <strong id="amount">{{ payment.value }}</strong></span>
             </div>
         </aside>
     </header>

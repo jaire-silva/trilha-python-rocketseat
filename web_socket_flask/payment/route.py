@@ -43,7 +43,13 @@ def pix_confirmation():
 
 @bp_payment.route('/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
-    return render_template('payment.html')
+
+    payment:Payment = Payment.query.get(payment_id)
+
+    if not payment:
+        return render_template('404.html')
+
+    return render_template('payment.html', payment=payment)
 
 
 @bp_payment.route('/pix/qr-code/<file_name>', methods=['GET'])
