@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from flask import Blueprint, jsonify, request, send_file
+from flask import Blueprint, jsonify, request, send_file, render_template
 
 from web_socket_flask.config import IMG_FOLDER, is_valid_qr_code_file
 from web_socket_flask.database import db
@@ -43,7 +43,7 @@ def pix_confirmation():
 
 @bp_payment.route('/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
-    return jsonify({'message': f'The payment with id {payment_id} has been found'})
+    return render_template('payment.html')
 
 
 @bp_payment.route('/pix/qr-code/<file_name>', methods=['GET'])
@@ -51,6 +51,6 @@ def payment_pix_qr_code(file_name):
     img_path = f"{IMG_FOLDER}/{file_name}.png"
 
     if not is_valid_qr_code_file(img_path):
-        return jsonify({'message': 'QR code not found'}), 404
+        return render_template('404.html')
 
     return send_file(img_path, mimetype="image/png")
