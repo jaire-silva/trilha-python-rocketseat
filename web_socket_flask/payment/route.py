@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_file
 
+from web_socket_flask.config import IMG_FOLDER, is_valid_qr_code_file
 from web_socket_flask.database import db
 from web_socket_flask.payment import Payment
+from web_socket_flask.payment.payment_type import Pix
 
 bp_payment = Blueprint('payment', __name__, url_prefix='/payment')
 
@@ -18,6 +20,12 @@ def pix():
     expiration_date = datetime.now() + timedelta(minutes=30)
 
     new_payment = Payment(value=data['value'], expiration_date=expiration_date)
+
+    pix_obj = Pix()
+
+    data_payment_pix = pix_obj.create_payment()
+    new_payment.bank_payment_id = data_payment_pix['bank_payment_id']
+    new_payment.qr_code = data_payment_pix['qr_code']
 
     db.session.add(new_payment)
     db.session.commit()
@@ -36,3 +44,13 @@ def pix_confirmation():
 @bp_payment.route('/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
     return jsonify({'message': f'The payment with id {payment_id} has been found'})
+
+
+@bp_payment.route('/pix/qr-code/<file_name>', methods=['GET'])
+def payment_pix_qr_code(file_name):
+    img_path = f"{IMG_FOLDER}/{file_name}.png"
+
+    if not is_valid_qr_code_file(img_path):
+        return jsonify({'message': 'QR code not found'}), 404
+
+    return send_file(img_path, mimetype="image/png")

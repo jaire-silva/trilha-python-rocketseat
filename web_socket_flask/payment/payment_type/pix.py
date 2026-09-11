@@ -11,11 +11,11 @@ class Pix:
         pass
 
     def create_payment(self):
-        bank_payment_id = uuid.uuid4()
+        bank_payment_id = str(uuid.uuid4())
         hash_payment = f"has_payment_{bank_payment_id}"
         qrcode_img = qrcode.make(hash_payment)
 
-        img_path = os.path.join(IMG_FOLDER, f"{bank_payment_id}.png")
+        img_path = os.path.join(IMG_FOLDER, f"qr_code_payment_{bank_payment_id}.png")
         qrcode_img.save(img_path)
 
         return {
