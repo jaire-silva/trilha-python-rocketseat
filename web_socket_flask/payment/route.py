@@ -49,7 +49,7 @@ def payment_pix_page(payment_id):
     if not payment:
         return render_template('404.html')
 
-    return render_template('payment.html', payment=payment)
+    return render_template('payment.html', payment_id=payment.id, value=payment.value, qr_code= payment.qr_code)
 
 
 @bp_payment.route('/pix/qr-code/<file_name>', methods=['GET'])
