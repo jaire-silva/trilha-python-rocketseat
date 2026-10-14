@@ -5,7 +5,7 @@ from flask import request as FlaskRequest
 
 class Calculator1:
     def calculate(self, request: FlaskRequest) -> Dict:
-        body = request.get_json()
+        body = request.json
         input_data = self.__validate_body(body)
         print(input_data)
 
