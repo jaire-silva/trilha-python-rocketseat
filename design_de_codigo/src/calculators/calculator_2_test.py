@@ -3,6 +3,7 @@ from typing import Dict
 from pytest import raises
 
 from design_de_codigo.src.calculators.calculator_2 import Calculator2
+from design_de_codigo.src.drivers.numpy_handler import NumpyHandler
 
 
 class MockRequest:
@@ -12,7 +13,8 @@ class MockRequest:
 
 def test_calculator_2():
     mock_request = MockRequest(body={"numbers": [2.12, 4.62, 1.32]})
-    calculator_2 = Calculator2()
+    driver = NumpyHandler()
+    calculator_2 = Calculator2(driver)
 
     response = calculator_2.calculate(mock_request)
 
@@ -30,7 +32,8 @@ def test_calculator_2():
 
 def test_calculator_2_with_invalid_body():
     mock_request = MockRequest(body={"something": 1})
-    calculator_2 = Calculator2()
+    driver = NumpyHandler()
+    calculator_2 = Calculator2(driver)
 
     with raises(Exception) as exc_info:
         calculator_2.calculate(mock_request)
