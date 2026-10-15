@@ -1,8 +1,10 @@
 from typing import Dict
+from typing import List
 
 from pytest import raises
 
 from design_de_codigo.src.calculators.calculator_2 import Calculator2
+from design_de_codigo.src.drivers.interfaces.driver_handler_interface import DriverHandlerInterface
 from design_de_codigo.src.drivers.numpy_handler import NumpyHandler
 
 
@@ -11,7 +13,12 @@ class MockRequest:
         self.json = body
 
 
-def test_calculator_2():
+class MockDriverHandler(DriverHandlerInterface):
+    def standard_derivation(self, numbers: List[float]) -> float:
+        return 3
+
+
+def test_calculator_2_integration():
     mock_request = MockRequest(body={"numbers": [2.12, 4.62, 1.32]})
     driver = NumpyHandler()
     calculator_2 = Calculator2(driver)
@@ -28,6 +35,25 @@ def test_calculator_2():
     # Assertividade da resposta
     assert response["data"]["result"] == 0.08
     assert response == {'data': {'Calculator': 2, 'result': 0.08}}
+
+
+def test_calculator_2():
+    mock_request = MockRequest(body={"numbers": [2.12, 4.62, 1.32]})
+    driver = MockDriverHandler()
+    calculator_2 = Calculator2(driver)
+
+    response = calculator_2.calculate(mock_request)
+
+    # Formato esperado da resposta
+    assert isinstance(response, dict)
+    assert "data" in response
+    assert "Calculator" in response["data"]
+    assert response["data"]["Calculator"] == 2
+    assert "result" in response["data"]
+
+    # Assertividade da resposta
+    assert response["data"]["result"] == 0.33
+    assert response == {'data': {'Calculator': 2, 'result': 0.33}}
 
 
 def test_calculator_2_with_invalid_body():
