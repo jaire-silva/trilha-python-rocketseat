@@ -9,7 +9,7 @@ class Calculator2:
     def __init__(self, driver_handler: DriverHandlerInterface):
         self.__driver_handler = driver_handler
 
-    def calculate(self, request: FlaskRequest):
+    def calculate(self, request: FlaskRequest) -> Dict:
         body = request.json
         input_data = self.__validate_body(body)
 

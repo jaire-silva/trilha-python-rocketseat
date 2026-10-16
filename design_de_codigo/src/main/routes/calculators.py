@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 
 from design_de_codigo.src.main.factories.calculator_1_factory import calculator_1_factory
 from design_de_codigo.src.main.factories.calculator_2_factory import calculator_2_factory
+from design_de_codigo.src.main.factories.calculator_3_factory import calculator_3_factory
 
 calc_route_bp = Blueprint('calc_routes', __name__)
 
@@ -16,5 +17,12 @@ def calculator_1():
 @calc_route_bp.route('/calculator/2', methods=['POST'])
 def calculator_2():
     calc = calculator_2_factory()
+    response = calc.calculate(request)
+    return jsonify(response), 200
+
+
+@calc_route_bp.route('/calculator/3', methods=['POST'])
+def calculator_3():
+    calc = calculator_3_factory()
     response = calc.calculate(request)
     return jsonify(response), 200

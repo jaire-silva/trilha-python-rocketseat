@@ -17,6 +17,8 @@ class MockDriverHandler(DriverHandlerInterface):
     def standard_derivation(self, numbers: List[float]) -> float:
         return 3
 
+    def variance(self, numbers: List[float]) -> float: pass
+
 
 def test_calculator_2_integration():
     mock_request = MockRequest(body={"numbers": [2.12, 4.62, 1.32]})
@@ -58,7 +60,7 @@ def test_calculator_2():
 
 def test_calculator_2_with_invalid_body():
     mock_request = MockRequest(body={"something": 1})
-    driver = NumpyHandler()
+    driver = MockDriverHandler()
     calculator_2 = Calculator2(driver)
 
     with raises(Exception) as exc_info:
