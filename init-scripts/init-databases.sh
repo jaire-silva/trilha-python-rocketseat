@@ -14,3 +14,4 @@ EOSQL
 # Chama a função para criar as suas duas bases de dados de forma isolada e segura
 create_database "sample_flask_auth"
 create_database "web_socket_flask"
+create_database "mvc_projeto_pets"
