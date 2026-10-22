@@ -1,0 +1,14 @@
+#file: noinspection SpellCheckingInspection
+repos:
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [ python ]
+        args:
+          - "--reports=n"
+          - "--score=n"
+          - "--rcfile=.pylintrc"
+          - "--load-plugins=pylint.extensions.docparams"
