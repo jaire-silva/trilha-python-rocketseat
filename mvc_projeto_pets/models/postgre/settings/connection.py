@@ -1,13 +1,16 @@
-from flask import Flask
-
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from sqlalchemy import create_engine
 
 
-def init_database(app: Flask) -> None:
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://admin:admin123@localhost:5432/mvc_projeto_pet"
-    app.config["SECRET_KEY"] = "admin123"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+class DBConnectionHandler:
+    def __init__(self) -> None:
+        self.__connection_string = "postgresql+psycopg2://admin:admin123@localhost:5432/mvc_projeto_pet"
+        self.__engine = None
 
-    db.init_app(app)
+    def connect_to_db(self) -> None:
+        self.__engine = create_engine(self.__connection_string)
+
+    def get_engine(self):
+        return self.__engine
+
+
+db_connection_handler = DBConnectionHandler()

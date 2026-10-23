@@ -1,14 +1,14 @@
-from sqlalchemy import BIGINT
+from sqlalchemy import BigInteger, String, Column
 
-from ..settings.connection import db
+from ..settings.base import Base
 
 
-class Pets(db.Model):
+class Pets(Base):
     __tablename__: str = "pets"
 
-    id = db.Column(BIGINT, primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=False)
-    type = db.Column(db.String(100), nullable=False, unique=False)
+    id = Column(BigInteger, primary_key=True)
+    name = Column(String(100), nullable=False, unique=False)
+    type = Column(String(100), nullable=False, unique=False)
 
     def __repr__(self) -> str:
         return f"<Pets[id={self.id}, name={self.name}, type={self.type}]>"

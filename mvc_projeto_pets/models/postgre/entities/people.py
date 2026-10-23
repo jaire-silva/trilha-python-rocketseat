@@ -1,14 +1,16 @@
-from ..settings.connection import db
+from sqlalchemy import BigInteger, ForeignKey, String, Column
+
+from ..settings.base import Base
 
 
-class People(db.Model):
+class People(Base):
     __tablename__: str = "people"
 
-    id = db.Column(db.BigInteger, primary_key=True)
-    first_name = db.Column(db.String(100), nullable=False, unique=False)
-    last_name = db.Column(db.String(100), nullable=False, unique=False)
-    age = db.Column(db.BigInteger, nullable=False, unique=False)
-    pet_id = db.Column(db.BigInteger, db.ForeignKey("pets.id"), nullable=False, unique=False)
+    id = Column(BigInteger, primary_key=True)
+    first_name = Column(String(100), nullable=False, unique=False)
+    last_name = Column(String(100), nullable=False, unique=False)
+    age = Column(BigInteger, nullable=False, unique=False)
+    pet_id = Column(BigInteger, ForeignKey("pets.id"), nullable=False, unique=False)
 
     def __repr__(self) -> str:
         return (
