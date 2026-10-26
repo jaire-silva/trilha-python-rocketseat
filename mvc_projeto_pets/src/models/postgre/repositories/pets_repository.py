@@ -26,15 +26,15 @@ class PetsRepository:
                 database.session.commit()
                 database.session.refresh(pet)
                 return pet
-            except Exception as e:
+            except Exception as exc:
                 database.session.rollback()
-                print(f"Erro durante a criação do pet: {e}")
-                return None
+                raise exc
 
     def delete_pet(self, pet_id: int) -> None:
 
         with self.__db_connection as database:
             try:
                 database.session.query(PetsTable).filter(PetsTable.id == pet_id).delete()
-            except NoResultFound:
+            except Exception as exc:
                 database.session.rollback()
+                raise exc
