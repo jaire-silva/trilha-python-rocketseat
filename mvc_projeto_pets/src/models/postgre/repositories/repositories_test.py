@@ -1,6 +1,8 @@
 import pytest
 
+from .people_repository import PeopleRepository
 from .pets_repository import PetsRepository
+from ..entities.people import PeopleTable
 from ..entities.pets import PetsTable
 from ..settings.connection import db_connection_handler
 
@@ -25,3 +27,28 @@ def test_delete_pet() -> None:
     repo.create_pet(pet)
 
     repo.delete_pet(pet.id)
+
+
+@pytest.mark.skip(reason="interação com o banco")
+def test_create_people():
+    people = PeopleTable(
+        first_name="test name",
+        last_name="test last",
+        age=77,
+        pet_id=2
+    )
+
+    repo = PeopleRepository(db_connection_handler)
+    response = repo.insert_people(people)
+    print(response)
+
+
+@pytest.mark.skip(reason="interação com o banco")
+def test_get_people_by_id():
+    people_id = 1
+
+    repo = PeopleRepository(db_connection_handler)
+    response = repo.get_people_by_id(people_id)
+
+    print()
+    print(response.pet_name)
