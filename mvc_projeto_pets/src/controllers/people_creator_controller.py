@@ -1,11 +1,12 @@
 import re
 
+from .interfaces.people_creator_controller_interface import PeopleCreatorControllerInterface
 from ..dtos.create_people_dto import CreatePeopleDTO
 from ..dtos.response_people_dto import ResponsePeopleDTO
 from ..models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
 
 
-class PeopleCreatorController:
+class PeopleCreatorController(PeopleCreatorControllerInterface):
     def __init__(self, people_repository: PeopleRepositoryInterface):
         self.people_repository = people_repository
 

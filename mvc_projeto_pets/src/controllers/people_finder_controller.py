@@ -1,8 +1,9 @@
+from .interfaces.people_finder_controller_interface import PeopleFinderControllerInterface
 from ..dtos.people_with_pet_dto import PeopleWithPetDTO
 from ..models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
 
 
-class PeopleFinderController:
+class PeopleFinderController(PeopleFinderControllerInterface):
     def __init__(self, people_repository: PeopleRepositoryInterface):
         self.people_repository = people_repository
 

@@ -1,8 +1,9 @@
+from .interfaces.pet_list_controller_interface import PetListControllerInterface
 from ..dtos.response_pet_dto import ResponsePetDTO
 from ..models.postgre.repositories.pets_repository import PetsRepositoryInterface
 
 
-class PetListController:
+class PetListController(PetListControllerInterface):
     def __init__(self, pets_repository: PetsRepositoryInterface) -> None:
         self.pets_repository = pets_repository
 
