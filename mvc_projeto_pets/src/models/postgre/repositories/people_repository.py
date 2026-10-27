@@ -2,11 +2,12 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from ..entities.people import PeopleTable
 from ..entities.pets import PetsTable
+from ..interfaces.people_repository_interface import PeopleRepositoryInterface
 from ..settings.connection import DBConnectionHandler
 from ....dtos.people_with_pet_dto import PeopleWithPetDTO
 
 
-class PeopleRepository:
+class PeopleRepository(PeopleRepositoryInterface):
     def __init__(self, db_connection: DBConnectionHandler) -> None:
         self.__db_connection = db_connection
 
