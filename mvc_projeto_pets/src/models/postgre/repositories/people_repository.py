@@ -4,20 +4,33 @@ from ..entities.people import PeopleTable
 from ..entities.pets import PetsTable
 from ..interfaces.people_repository_interface import PeopleRepositoryInterface
 from ..settings.connection import DBConnectionHandler
+from ....dtos.create_people_dto import CreatePeopleDTO
 from ....dtos.people_with_pet_dto import PeopleWithPetDTO
+from ....dtos.response_create_people_dto import ResponseCreatePeopleDTO
 
 
 class PeopleRepository(PeopleRepositoryInterface):
     def __init__(self, db_connection: DBConnectionHandler) -> None:
         self.__db_connection = db_connection
 
-    def insert_people(self, people: PeopleTable) -> PeopleTable:
+    def insert_people(self, people: CreatePeopleDTO) -> ResponseCreatePeopleDTO:
         with self.__db_connection as database:
             try:
-                database.session.add(people)
+                people_entity = PeopleTable(
+                    first_name=people.first_name,
+                    last_name=people.last_name,
+                    age=people.age,
+                    pet_id=people.pet_id
+                )
+
+                database.session.add(people_entity)
                 database.session.commit()
-                database.session.refresh(people)
-                return people
+
+                database.session.refresh(people_entity)
+
+                response_people = ResponseCreatePeopleDTO.model_validate(people_entity)
+
+                return response_people
             except Exception as exc:
                 database.session.rollback()
                 raise exc

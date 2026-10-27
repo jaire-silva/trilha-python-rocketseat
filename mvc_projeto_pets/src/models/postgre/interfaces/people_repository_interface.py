@@ -1,13 +1,14 @@
 from abc import ABC
 from abc import abstractmethod
 
-from ..entities.people import PeopleTable
+from ....dtos.create_people_dto import CreatePeopleDTO
 from ....dtos.people_with_pet_dto import PeopleWithPetDTO
+from ....dtos.response_create_people_dto import ResponseCreatePeopleDTO
 
 
 class PeopleRepositoryInterface(ABC):
     @abstractmethod
-    def insert_people(self, people: PeopleTable) -> PeopleTable:
+    def insert_people(self, people: CreatePeopleDTO) -> ResponseCreatePeopleDTO:
         pass
 
     @abstractmethod

@@ -8,6 +8,7 @@ disable=
     E0015, # unrecognized-option
     W0703, # catching too general exception
     C0321, # multiple-statements
+    W0719, # broad-exception-raised. Raising too general exception
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists

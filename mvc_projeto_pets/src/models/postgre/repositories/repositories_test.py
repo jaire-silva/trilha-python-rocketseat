@@ -2,9 +2,9 @@ import pytest
 
 from .people_repository import PeopleRepository
 from .pets_repository import PetsRepository
-from ..entities.people import PeopleTable
 from ..entities.pets import PetsTable
 from ..settings.connection import db_connection_handler
+from ....dtos.create_people_dto import CreatePeopleDTO
 
 db_connection_handler.connect_to_db()
 
@@ -31,7 +31,7 @@ def test_delete_pet() -> None:
 
 @pytest.mark.skip(reason="interação com o banco")
 def test_create_people():
-    people = PeopleTable(
+    people = CreatePeopleDTO(
         first_name="test name",
         last_name="test last",
         age=77,
