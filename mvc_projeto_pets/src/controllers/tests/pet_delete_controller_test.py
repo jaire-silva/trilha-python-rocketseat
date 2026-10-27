@@ -1,4 +1,4 @@
-from ..controllers.pet_delete_controller import PetDeleteController
+from mvc_projeto_pets.src.controllers.pet_delete_controller import PetDeleteController
 
 
 def test_pet_delete_controller_delete_pet_pass(mocker):

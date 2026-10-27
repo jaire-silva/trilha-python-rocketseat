@@ -1,7 +1,7 @@
-from .pet_list_controller import PetListController
-from ..dtos.response_pet_dto import ResponsePetDTO
-from ..models.postgre.entities.pets import PetsTable
-from ..models.postgre.repositories.pets_repository import PetsRepositoryInterface
+from mvc_projeto_pets.src.controllers.pet_list_controller import PetListController
+from mvc_projeto_pets.src.dtos.response_pet_dto import ResponsePetDTO
+from mvc_projeto_pets.src.models.postgre.entities.pets import PetsTable
+from mvc_projeto_pets.src.models.postgre.repositories.pets_repository import PetsRepositoryInterface
 
 mock_pets = [
     ResponsePetDTO(
