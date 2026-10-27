@@ -19,7 +19,7 @@ class PetListController:
         formatted_pets = []
 
         for pet in pets:
-            formatted_pets.append({pet.model_dump()})
+            formatted_pets.append(pet.model_dump())
 
         return {
             "data": {
