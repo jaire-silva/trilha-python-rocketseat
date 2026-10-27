@@ -2,6 +2,7 @@ from typing import List
 
 from sqlalchemy.exc import NoResultFound
 
+from mvc_projeto_pets.src.dtos.response_pet_dto import ResponsePetDTO
 from ..entities.pets import PetsTable
 from ..interfaces.pets_repository_interface import PetsRepositoryInterface
 from ..settings.connection import DBConnectionHandler
@@ -11,11 +12,14 @@ class PetsRepository(PetsRepositoryInterface):
     def __init__(self, db_connection: DBConnectionHandler) -> None:
         self.__db_connection = db_connection
 
-    def list_pets(self) -> List[PetsTable]:
+    def list_pets(self) -> List[ResponsePetDTO]:
         with self.__db_connection as database:
             try:
                 pets = database.session.query(PetsTable).all()
-                return pets
+
+                response = [ResponsePetDTO.model_validate(pet) for pet in pets]
+
+                return response
 
             except NoResultFound:
                 return []

@@ -2,12 +2,13 @@ from abc import ABC
 from abc import abstractmethod
 from typing import List
 
+from mvc_projeto_pets.src.dtos.response_pet_dto import ResponsePetDTO
 from ..entities.pets import PetsTable
 
 
 class PetsRepositoryInterface(ABC):
     @abstractmethod
-    def list_pets(self) -> List[PetsTable]:
+    def list_pets(self) -> List[ResponsePetDTO]:
         pass
 
     @abstractmethod
