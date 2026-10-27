@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class ResponseCreatePeopleDTO(BaseModel):
+class ResponsePeopleDTO(BaseModel):
     id: int
     first_name: str
     last_name: str

@@ -2,13 +2,13 @@ import pytest
 
 from .people_creator_controller import PeopleCreatorController
 from ..dtos.create_people_dto import CreatePeopleDTO
-from ..dtos.response_create_people_dto import ResponseCreatePeopleDTO
+from ..dtos.response_people_dto import ResponsePeopleDTO
 from ..models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
 
 
 class MockPeopleRepository(PeopleRepositoryInterface):
-    def insert_people(self, people: CreatePeopleDTO) -> ResponseCreatePeopleDTO:
-        response = ResponseCreatePeopleDTO(
+    def insert_people(self, people: CreatePeopleDTO) -> ResponsePeopleDTO:
+        response = ResponsePeopleDTO(
             id=1,
             first_name=people.first_name,
             last_name=people.last_name,
@@ -17,7 +17,7 @@ class MockPeopleRepository(PeopleRepositoryInterface):
         )
         return response
 
-    def get_people_by_id(self, people_id: int) -> ResponseCreatePeopleDTO | None:
+    def get_people_by_id(self, people_id: int) -> ResponsePeopleDTO | None:
         pass
 
 

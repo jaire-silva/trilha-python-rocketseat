@@ -1,7 +1,7 @@
 import re
 
 from ..dtos.create_people_dto import CreatePeopleDTO
-from ..dtos.response_create_people_dto import ResponseCreatePeopleDTO
+from ..dtos.response_people_dto import ResponsePeopleDTO
 from ..models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
 
 
@@ -30,10 +30,10 @@ class PeopleCreatorController:
         if non_valid_characters.search(first_name) or non_valid_characters.search(last_name):
             raise Exception("Nome da pessoa invalido!")
 
-    def __insert_people_in_db(self, people_dto: CreatePeopleDTO) -> ResponseCreatePeopleDTO:
+    def __insert_people_in_db(self, people_dto: CreatePeopleDTO) -> ResponsePeopleDTO:
         return self.people_repository.insert_people(people_dto)
 
-    def __format_response(self, response: ResponseCreatePeopleDTO) -> dict:
+    def __format_response(self, response: ResponsePeopleDTO) -> dict:
         return {
             "data": {
                 "type": "People",

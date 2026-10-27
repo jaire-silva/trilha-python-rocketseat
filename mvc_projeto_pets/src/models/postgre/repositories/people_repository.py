@@ -6,14 +6,14 @@ from ..interfaces.people_repository_interface import PeopleRepositoryInterface
 from ..settings.connection import DBConnectionHandler
 from ....dtos.create_people_dto import CreatePeopleDTO
 from ....dtos.people_with_pet_dto import PeopleWithPetDTO
-from ....dtos.response_create_people_dto import ResponseCreatePeopleDTO
+from ....dtos.response_people_dto import ResponsePeopleDTO
 
 
 class PeopleRepository(PeopleRepositoryInterface):
     def __init__(self, db_connection: DBConnectionHandler) -> None:
         self.__db_connection = db_connection
 
-    def insert_people(self, people: CreatePeopleDTO) -> ResponseCreatePeopleDTO:
+    def insert_people(self, people: CreatePeopleDTO) -> ResponsePeopleDTO:
         with self.__db_connection as database:
             try:
                 people_entity = PeopleTable(
@@ -28,7 +28,7 @@ class PeopleRepository(PeopleRepositoryInterface):
 
                 database.session.refresh(people_entity)
 
-                response_people = ResponseCreatePeopleDTO.model_validate(people_entity)
+                response_people = ResponsePeopleDTO.model_validate(people_entity)
 
                 return response_people
             except Exception as exc:

@@ -3,12 +3,12 @@ from abc import abstractmethod
 
 from ....dtos.create_people_dto import CreatePeopleDTO
 from ....dtos.people_with_pet_dto import PeopleWithPetDTO
-from ....dtos.response_create_people_dto import ResponseCreatePeopleDTO
+from ....dtos.response_people_dto import ResponsePeopleDTO
 
 
 class PeopleRepositoryInterface(ABC):
     @abstractmethod
-    def insert_people(self, people: CreatePeopleDTO) -> ResponseCreatePeopleDTO:
+    def insert_people(self, people: CreatePeopleDTO) -> ResponsePeopleDTO:
         pass
 
     @abstractmethod
