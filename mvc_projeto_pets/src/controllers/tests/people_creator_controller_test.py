@@ -1,13 +1,13 @@
 import pytest
 
 from mvc_projeto_pets.src.controllers.people_creator_controller import PeopleCreatorController
-from mvc_projeto_pets.src.dtos.create_people_dto import CreatePeopleDTO
+from mvc_projeto_pets.src.dtos.people_create_dto import PeopleCreateDTO
 from mvc_projeto_pets.src.dtos.response_people_dto import ResponsePeopleDTO
 from mvc_projeto_pets.src.models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
 
 
 class MockPeopleRepository(PeopleRepositoryInterface):
-    def insert_people(self, people: CreatePeopleDTO) -> ResponsePeopleDTO:
+    def insert_people(self, people: PeopleCreateDTO) -> ResponsePeopleDTO:
         response = ResponsePeopleDTO(
             id=1,
             first_name=people.first_name,

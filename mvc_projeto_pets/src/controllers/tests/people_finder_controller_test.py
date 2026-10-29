@@ -1,7 +1,7 @@
 # pylint: disable=unused-argument
 
 from mvc_projeto_pets.src.controllers.people_finder_controller import PeopleFinderController
-from mvc_projeto_pets.src.dtos.create_people_dto import CreatePeopleDTO
+from mvc_projeto_pets.src.dtos.people_create_dto import PeopleCreateDTO
 from mvc_projeto_pets.src.dtos.people_with_pet_dto import PeopleWithPetDTO
 from mvc_projeto_pets.src.dtos.response_people_dto import ResponsePeopleDTO
 from mvc_projeto_pets.src.models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
@@ -15,7 +15,7 @@ mock_people_with_pet = PeopleWithPetDTO(
 
 
 class MockPeopleRepository(PeopleRepositoryInterface):
-    def insert_people(self, people: CreatePeopleDTO) -> ResponsePeopleDTO:
+    def insert_people(self, people: PeopleCreateDTO) -> ResponsePeopleDTO:
         pass
 
     def get_people_by_id(self, people_id: int) -> PeopleWithPetDTO | None:

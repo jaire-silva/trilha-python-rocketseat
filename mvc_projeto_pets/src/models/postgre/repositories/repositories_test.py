@@ -4,7 +4,7 @@ from .people_repository import PeopleRepository
 from .pets_repository import PetsRepository
 from ..entities.pets import PetsTable
 from ..settings.connection import db_connection_handler
-from ....dtos.create_people_dto import CreatePeopleDTO
+from ....dtos.people_create_dto import PeopleCreateDTO
 
 db_connection_handler.connect_to_db()
 
@@ -31,7 +31,7 @@ def test_delete_pet() -> None:
 
 @pytest.mark.skip(reason="interação com o banco")
 def test_create_people():
-    people = CreatePeopleDTO(
+    people = PeopleCreateDTO(
         first_name="test name",
         last_name="test last",
         age=77,

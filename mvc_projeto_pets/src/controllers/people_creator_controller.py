@@ -2,7 +2,7 @@ import re
 
 from mvc_projeto_pets.src.errors.errors_types.http_bad_request import HttpBadRequestError
 from .interfaces.people_creator_controller_interface import PeopleCreatorControllerInterface
-from ..dtos.create_people_dto import CreatePeopleDTO
+from ..dtos.people_create_dto import PeopleCreateDTO
 from ..dtos.response_people_dto import ResponsePeopleDTO
 from ..models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
 
@@ -12,7 +12,7 @@ class PeopleCreatorController(PeopleCreatorControllerInterface):
         self.people_repository = people_repository
 
     def create(self, people_info: dict) -> dict:
-        people_dto = CreatePeopleDTO(
+        people_dto = PeopleCreateDTO(
             first_name=people_info["first_name"],
             last_name=people_info["last_name"],
             age=people_info["age"],
@@ -32,7 +32,7 @@ class PeopleCreatorController(PeopleCreatorControllerInterface):
         if non_valid_characters.search(first_name) or non_valid_characters.search(last_name):
             raise HttpBadRequestError("Nome da pessoa invalido!")
 
-    def __insert_people_in_db(self, people_dto: CreatePeopleDTO) -> ResponsePeopleDTO:
+    def __insert_people_in_db(self, people_dto: PeopleCreateDTO) -> ResponsePeopleDTO:
         return self.people_repository.insert_people(people_dto)
 
     def __format_response(self, response: ResponsePeopleDTO) -> dict:

@@ -4,7 +4,7 @@ from ..entities.people import PeopleTable
 from ..entities.pets import PetsTable
 from ..interfaces.people_repository_interface import PeopleRepositoryInterface
 from ..settings.connection import DBConnectionHandler
-from ....dtos.create_people_dto import CreatePeopleDTO
+from ....dtos.people_create_dto import PeopleCreateDTO
 from ....dtos.people_with_pet_dto import PeopleWithPetDTO
 from ....dtos.response_people_dto import ResponsePeopleDTO
 
@@ -13,7 +13,7 @@ class PeopleRepository(PeopleRepositoryInterface):
     def __init__(self, db_connection: DBConnectionHandler) -> None:
         self.__db_connection = db_connection
 
-    def insert_people(self, people: CreatePeopleDTO) -> ResponsePeopleDTO:
+    def insert_people(self, people: PeopleCreateDTO) -> ResponsePeopleDTO:
         with self.__db_connection as database:
             try:
                 people_entity = PeopleTable(
