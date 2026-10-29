@@ -1,5 +1,6 @@
 import re
 
+from mvc_projeto_pets.src.errors.errors_types.http_bad_request import HttpBadRequestError
 from .interfaces.people_creator_controller_interface import PeopleCreatorControllerInterface
 from ..dtos.create_people_dto import CreatePeopleDTO
 from ..dtos.response_people_dto import ResponsePeopleDTO
@@ -29,7 +30,7 @@ class PeopleCreatorController(PeopleCreatorControllerInterface):
         non_valid_characters = re.compile(r'[^a-zA-Z ]')
 
         if non_valid_characters.search(first_name) or non_valid_characters.search(last_name):
-            raise Exception("Nome da pessoa invalido!")
+            raise HttpBadRequestError("Nome da pessoa invalido!")
 
     def __insert_people_in_db(self, people_dto: CreatePeopleDTO) -> ResponsePeopleDTO:
         return self.people_repository.insert_people(people_dto)

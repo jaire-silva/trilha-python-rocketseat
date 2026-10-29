@@ -1,3 +1,4 @@
+from mvc_projeto_pets.src.errors.errors_types.http_not_found import HttpNotFoundError
 from .interfaces.people_finder_controller_interface import PeopleFinderControllerInterface
 from ..dtos.people_with_pet_dto import PeopleWithPetDTO
 from ..models.postgre.interfaces.people_repository_interface import PeopleRepositoryInterface
@@ -16,7 +17,7 @@ class PeopleFinderController(PeopleFinderControllerInterface):
         people = self.people_repository.get_people_by_id(people_id)
 
         if not people:
-            raise Exception("Pessoa não encontrada!")
+            raise HttpNotFoundError("Pessoa não encontrada!")
 
         return people
 
