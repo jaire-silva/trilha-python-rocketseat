@@ -40,6 +40,7 @@ class PetsRepository(PetsRepositoryInterface):
         with self.__db_connection as database:
             try:
                 database.session.query(PetsTable).filter(PetsTable.id == pet_id).delete()
+                database.session.commit()
             except Exception as exc:
                 database.session.rollback()
                 raise exc
