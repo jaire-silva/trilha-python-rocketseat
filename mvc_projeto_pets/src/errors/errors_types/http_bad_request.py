@@ -1,6 +1,10 @@
-class HttpBadRequestError(Exception):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-        self.status_code = 400
-        self.name = "BadRequest"
-        self.message = message
+from .error_interface import ErrorInterface
+
+
+class HttpBadRequestError(ErrorInterface):
+    def __init__(self, message: str):
+        super().__init__(
+            message,
+            name="BadRequest",
+            status_code=400
+        )

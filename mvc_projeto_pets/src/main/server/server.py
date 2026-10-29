@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 
+from mvc_projeto_pets.src.errors.error_handler import error_handler_bp
 from mvc_projeto_pets.src.models.postgre.settings.connection import db_connection_handler
 from ..routes.people_routes import people_route_bp
 from ..routes.pets_routes import pet_route_bp
@@ -10,3 +11,4 @@ app = Flask(__name__)
 CORS(app)
 app.register_blueprint(pet_route_bp)
 app.register_blueprint(people_route_bp)
+app.register_blueprint(error_handler_bp)

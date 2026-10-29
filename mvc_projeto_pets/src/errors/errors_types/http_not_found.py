@@ -1,6 +1,10 @@
-class HttpNotFoundError(Exception):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-        self.status_code = 404
-        self.name = "NotFound"
-        self.message = message
+from .error_interface import ErrorInterface
+
+
+class HttpNotFoundError(ErrorInterface):
+    def __init__(self, message: str):
+        super().__init__(
+            message,
+            name="NotFound",
+            status_code=404
+        )
