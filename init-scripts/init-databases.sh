@@ -24,8 +24,11 @@ apply_schema() {
 create_database "sample_flask_auth"
 create_database "web_socket_flask"
 create_database "mvc_projeto_pets"
-create_database "jwt_api_banco"
+create_database "jwt_api_banco_financeiro"
 
 # Aplicando o schema ao banco "mvc_projeto_pets"
 apply_schema "mvc_projeto_pets" "/docker-entrypoint-initdb.d/mvc_projeto_pets_schema.sql"
+
+# Aplicando o schema ao banco "jwt_api_banco_financeiro"
+apply_schema "jwt_api_banco_financeiro" "/docker-entrypoint-initdb.d/jwt_api_banco_financeiro.sql"
 
