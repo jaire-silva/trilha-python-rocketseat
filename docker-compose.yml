@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: "postgres_database_flask"
+    container_name: "postgres_database"
     image: postgres:16
     restart: unless-stopped
     environment:
@@ -12,10 +12,23 @@ services:
     expose:
       - "5432"
     volumes:
-      - postgres_database_flask:/var/lib/postgresql
+      - postgres_database:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
 
+  mongoDB:
+    container_name: "mongo_db_database"
+    image: mongo:latest
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "mongo123"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_database_data:/data/db
 
 volumes:
-  postgres_database_flask:
-    name: postgres_database_flask
+  postgres_database:
+    name: postgres_database
+  mongo_database_data:
+    name: mongo_database_data
