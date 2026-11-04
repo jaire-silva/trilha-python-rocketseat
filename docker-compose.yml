@@ -1,5 +1,5 @@
 services:
-  db:
+  postgresDB:
     container_name: "postgres_database"
     image: postgres:16
     restart: unless-stopped
@@ -12,11 +12,11 @@ services:
     expose:
       - "5432"
     volumes:
-      - postgres_database:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
 
   mongoDB:
-    container_name: "mongo_db_database"
+    container_name: "mongodb_database"
     image: mongo:latest
     restart: unless-stopped
     environment:
@@ -25,7 +25,16 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo_database_data:/data/db
+      - mongodb_data:/data/db
+
+  redisDB:
+    container_name: "redis_database"
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
 
   mongo-express:
     image: mongo-express
@@ -39,7 +48,9 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: admin123
 
 volumes:
-  postgres_database:
-    name: postgres_database
-  mongo_database_data:
-    name: mongo_database_data
+  postgres_data:
+    name: postgres_data
+  mongodb_data:
+    name: mongodb_data
+  redis_data:
+    name: redis_data
