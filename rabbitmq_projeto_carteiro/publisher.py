@@ -27,7 +27,6 @@ class RabbitMQPublisher:
         self.__connection = pika.Connection(connection_parameters)
         self.__channel = self.__connection.channel()
 
-
     def send_message(self, message: dict):
         self.__channel.basic_publish(
             exchange=self.__exchange,
@@ -39,8 +38,3 @@ class RabbitMQPublisher:
     def close(self):
         if self.__connection and not self.__connection.is_closed:
             self.__connection.close()
-
-
-rabbit_mq_publisher = RabbitMQPublisher()
-rabbit_mq_publisher.send_message({'msg': 'Estou no publisher'})
-rabbit_mq_publisher.close()
