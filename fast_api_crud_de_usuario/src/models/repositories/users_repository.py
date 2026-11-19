@@ -1,10 +1,12 @@
 from sqlalchemy import insert, select
 
 from fast_api_crud_de_usuario.src.models.entities.users import Users
+from fast_api_crud_de_usuario.src.models.repositories.interfaces.users_repository_interface import \
+    UsersRepositoryInterface
 from fast_api_crud_de_usuario.src.models.settings.database_connection_handler import DBConnectionHandler
 
 
-class UsersRepository:
+class UsersRepository(UsersRepositoryInterface):
 
     async def insert_user(self, user_info: dict):
         async with DBConnectionHandler() as db:
